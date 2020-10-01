@@ -5,6 +5,28 @@ const { default: Axios } = require("axios");
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+// const followersArray = [
+//   "tetondan",
+//   "dustinmyers",
+//   "justsml",
+//   "luishrd",
+//   "bigknell",
+//   "DonSutherland95",
+// ];
+
+// for (let i = 0; i < followersArray.length; i++) {
+//   Axios.get(`https://api.github.com/users/${i}`)
+//     .then((res) => {
+//       // createUser(res);
+//       let cards = document.querySelector(".cards");
+//       cards.appendChild(createUser(res));
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// }
+
 Axios.get("https://api.github.com/users/DonSutherland95")
   .then((res) => {
     // createUser(res);
@@ -33,6 +55,17 @@ function createUser(obj) {
   h3.classList.add("name");
   p1.classList.add("username");
 
+  img.src = obj.data.avatar_url;
+  h3.textContent = obj.data.name;
+  p1.textContent = obj.data.login;
+  p2.textContent = obj.data.location;
+  p3.textContent = `Profile: `;
+  a.textContent = `${obj.data.html_url}`;
+  a.href = obj.data.html_url;
+  p4.textContent = `Followers: ${obj.data.followers}`;
+  p5.textContent = `Following: ${obj.data.following} `;
+  p6.textContent = `Bio: ${obj.data.bio}`;
+
   div1.appendChild(img);
   div1.appendChild(div2);
   div2.appendChild(h3);
@@ -44,16 +77,9 @@ function createUser(obj) {
   div2.appendChild(p6);
   p3.appendChild(a);
 
-  img.src = obj.data.avatar_url;
-  h3.textContent = "Sheldon Sutherland";
-  p1.textContent = obj.data.login;
-  p2.textContent = obj.data.location;
-  p3.textContent = "Profile:";
-  a.href = obj.data.html_url;
-  a.textContent = obj.data.html_url;
-  p4.textContent = `Followers: ${obj.data.followers}`;
-  p5.textContent = `Following: ${obj.data.following} `;
-  p6.textContent = `Bio: ${obj.data.bio}`;
+  // p3.appendChild(a);
+  // a.textContent = "link";
+  // a.href = "https://msn.com";
 
   console.log(div1);
 
@@ -84,8 +110,24 @@ function createUser(obj) {
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
+const followersArray = [
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell",
+];
+followersArray.forEach((person) => {
+  Axios.get(`https://api.github.com/users/${person}`)
+    .then((res) => {
+      // createUser(res);
+      let cards = document.querySelector(".cards");
+      cards.appendChild(createUser(res));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
