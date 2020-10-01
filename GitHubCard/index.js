@@ -1,9 +1,65 @@
+const { default: Axios } = require("axios");
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+Axios.get("https://api.github.com/users/DonSutherland95")
+  .then((res) => {
+    // createUser(res);
+    let cards = document.querySelector(".cards");
+    cards.appendChild(createUser(res));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
+function createUser(obj) {
+  let div1 = document.createElement("div");
+  let img = document.createElement("img");
+  let div2 = document.createElement("div");
+  let h3 = document.createElement("h3");
+  let p1 = document.createElement("p");
+  let p2 = document.createElement("p");
+  let p3 = document.createElement("p");
+  let a = document.createElement("a");
+  let p4 = document.createElement("p");
+  let p5 = document.createElement("p");
+  let p6 = document.createElement("p");
+
+  div1.classList.add("card");
+  div2.classList.add("card-info");
+  h3.classList.add("name");
+  p1.classList.add("username");
+
+  div1.appendChild(img);
+  div1.appendChild(div2);
+  div2.appendChild(h3);
+  div2.appendChild(p1);
+  div2.appendChild(p2);
+  div2.appendChild(p3);
+  div2.appendChild(p4);
+  div2.appendChild(p5);
+  div2.appendChild(p6);
+  p3.appendChild(a);
+
+  img.src = obj.data.avatar_url;
+  h3.textContent = "Sheldon Sutherland";
+  p1.textContent = obj.data.login;
+  p2.textContent = obj.data.location;
+  p3.textContent = "Profile:";
+  a.href = obj.data.html_url;
+  a.textContent = obj.data.html_url;
+  p4.textContent = `Followers: ${obj.data.followers}`;
+  p5.textContent = `Following: ${obj.data.following} `;
+  p6.textContent = `Bio: ${obj.data.bio}`;
+
+  console.log(div1);
+
+  return div1;
+}
+// createUser();
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
